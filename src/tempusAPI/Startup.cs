@@ -56,8 +56,8 @@ namespace tempusAPI
             app.UseJwtBearerAuthentication(new JwtBearerOptions
             {
                 AutomaticAuthenticate = true,
-                Authority = "https://steyer-identity-server.azurewebsites.net/identity",
-                Audience = "https://steyer-identity-server.azurewebsites.net/identity/resources"
+                Authority = "https://localhost:5000/identity",
+                // Audience = "https://steyer-identity-server.azurewebsites.net/identity/resources"
             });
 
             app.UseCors(builder =>
