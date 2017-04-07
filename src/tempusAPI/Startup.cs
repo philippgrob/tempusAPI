@@ -53,12 +53,12 @@ namespace tempusAPI
             loggerFactory.AddConsole(Configuration.GetSection("Logging"));
             loggerFactory.AddDebug();
 
-            app.UseJwtBearerAuthentication(new JwtBearerOptions
-            {
-                AutomaticAuthenticate = true,
-                Authority = "https://localhost:5000/identity",
-                // Audience = "https://steyer-identity-server.azurewebsites.net/identity/resources"
-            });
+            //app.UseIdentityServerAuthentication(new IdentityServerAuthenticationOptions
+            //{
+            //    Authority = "https://localhost:5000/identity",
+            //    RequireHttpsMetadata = false,
+            //    ApiName = "api1"
+            //});
 
             app.UseCors(builder =>
                           builder.WithOrigins("http://localhost:8080").AllowAnyHeader().AllowAnyMethod());

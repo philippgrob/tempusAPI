@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Threading.Tasks;
+using Newtonsoft.Json;
 
 namespace tempusAPI.Models
 {
@@ -14,6 +15,7 @@ namespace tempusAPI.Models
         public string FirstName { get; set; }
         public string LastName { get; set; }
 
+        [JsonIgnore]
         public List<Booking> Bookings { get; set; } = new List<Booking>();
 
     }

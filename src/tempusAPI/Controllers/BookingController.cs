@@ -10,56 +10,46 @@ namespace tempusAPI.Controllers
     [Route("api/[controller]")]
     public class BookingController:Controller
     {
-        [HttpGet()]
-        public List<Booking> GetAll()
-        {
-            var repo = new BookingEFRepository();
-            return repo.FindAllBookings();
-        }
-
-        [HttpGet("employee")]
-        public List<Employee> GetEmployees()
-        {
-            var repo = new BookingEFRepository();
-            return repo.FindAllEmployees();
-        }
         
-        [HttpGet("project")]
-        public List<Project> GetProjects()
-        {
-            var repo = new BookingEFRepository();
-            return repo.FindAllProjects();
-        }
-
-        [HttpGet("employee/id/{id}")]
-        public Employee GetEmployee(int id)
-        {
-            var repo = new BookingEFRepository();
-            return repo.GetEmployeeById(id);
-        }
-
-        [HttpGet("booking/{id}")]
+        [HttpGet("/id/{id}")]
         public Booking GetBookingById(int id)
         {
-            var repo = new BookingEFRepository();
+            var repo = new BookingEfRepository();
             return repo.GetBookingById(id);
         }
 
-
-        [HttpGet("employee/userName/{userName}")]
-        public Employee GetEmployee(String userName)
+        //http://localhost:5001/api/booking?employeeId=2&beginDate=2013-04-23T18:25:43.511Z&completed=true
+        [HttpGet()]
+        public List<Booking> GetBookingsById([FromQuery]int employeeId, [FromQuery] string beginDate, [FromQuery] Boolean completed)
         {
-            var repo = new BookingEFRepository();
-            return repo.GetEmployeeByUserName(userName);
+           var repo = new BookingEfRepository();
+           return repo.FindBookingByEmployeeIdDateRestrictedByDateAndCompletion(employeeId, beginDate, completed);
         }
+
 
         [HttpPost]
         public IActionResult Post([FromBody] Booking booking)
         {
-            var repo = new BookingEFRepository();
+            var repo = new BookingEfRepository();
             repo.SaveBooking(booking);
 
             return CreatedAtAction(nameof(GetBookingById), new {id = booking.BookingId},booking);
+        }
+
+        [HttpPatch]
+        public IActionResult Patch([FromBody] Booking booking)
+        {
+            var repo = new BookingEfRepository();
+            repo.PatchBooking(booking);
+
+            return CreatedAtAction(nameof(GetBookingById), new { id = booking.BookingId }, booking);
+        }
+
+        [HttpDelete]
+        public void Remove(int id)
+        {
+            var repo = new BookingEfRepository();
+            repo.RemoveBooking(id);
         }
 
     }

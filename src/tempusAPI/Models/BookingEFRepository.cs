@@ -3,12 +3,13 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
+using Remotion.Linq.Parsing;
 
 namespace tempusAPI.Models
 {
-    public class BookingEFRepository
+    public class BookingEfRepository
     {
-        static BookingEFRepository()
+        static BookingEfRepository()
         {
             using (var ctx = new BookingDbContext())
             {
@@ -18,13 +19,15 @@ namespace tempusAPI.Models
                 var b1 = new Booking
                 {
                     BeginDate = DateTime.Now,
-                    EndDate = DateTime.Now.AddHours(2)
+                    EndDate = DateTime.Now.AddHours(2),
+                    Completed =  true
                 };
 
                 var b2 = new Booking
                 {
                     BeginDate = DateTime.Now,
-                    EndDate = DateTime.Now.AddHours(4)
+                    EndDate = DateTime.Now.AddHours(4),
+                    Completed = true
                 };
 
                 var e1 = new Employee
@@ -43,25 +46,62 @@ namespace tempusAPI.Models
 
                 var p1 = new Project
                 {
-                    AccountingNumber = "DE123850",
-                    ConfidentialStatus = "Confidential",
-                    ProjectDescription = "Thyssen Krupp AG",
+                        ProjectName = "Thyssen Krupp AG",
+                };
+                var p2 = new Project
+                {
+                    ProjectName = "OMV AG",
                 };
 
                 e1.Bookings.Add(b1);
                 p1.Bookings.Add(b1);
 
                 e2.Bookings.Add(b2);
-                p1.Bookings.Add(b2);
+                p2.Bookings.Add(b2);
 
                 ctx.Bookings.Add(b1);
                 ctx.Bookings.Add(b2);
                 ctx.Employees.Add(e1);
                 ctx.Employees.Add(e2);
                 ctx.Projects.Add(p1);
+                ctx.Projects.Add(p2);
 
                 ctx.SaveChanges();
 
+            }
+        }
+
+        internal void RemoveBooking(int id)
+        {
+            using (var ctx = new BookingDbContext())
+            {
+                ctx.Bookings.Remove(ctx.Bookings.FirstOrDefault(n => n.BookingId == id));
+                ctx.SaveChanges();
+            }
+        }
+
+        public List<Booking> FindBookingByEmployeeIdDateRestrictedByDateAndCompletion(int employeeId, string beginDate, bool completed)
+        {
+
+            using (var ctx = new BookingDbContext())
+            {
+
+                DateTime dateBorder = DateTime.Now;
+                
+                try
+                {
+                     dateBorder = DateTime.Parse(beginDate);
+                }
+                catch
+                {
+                    throw new Exception("DateTimeParsing fails! Daniel has send the wrong Date Format");
+                }
+                return ctx
+                    .Bookings
+                    .Where(n=> n.EmployeeId == employeeId)
+                    .Where(n => n.Completed == completed)
+                    .Where(n => n.BeginDate > dateBorder)
+                    .ToList();
             }
         }
 
@@ -81,7 +121,7 @@ namespace tempusAPI.Models
         {
             using (var ctx = new BookingDbContext())
             {
-                return ctx.Employees.Include(n=>n.Bookings).OrderBy(n=>n.EmployeeId).ToList();
+                return ctx.Employees.OrderBy(n=>n.EmployeeId).ToList();
             }
         }
 
@@ -89,7 +129,7 @@ namespace tempusAPI.Models
         {
             using (var ctx = new BookingDbContext())
             {
-                return ctx.Projects.Include(n=>n.Bookings).OrderBy(n=>n.ProjectId).ToList();
+                return ctx.Projects.OrderBy(n=>n.ProjectId).ToList();
             }
         }
 
@@ -97,7 +137,7 @@ namespace tempusAPI.Models
         {
             using (var ctx = new BookingDbContext())
             {
-                return ctx.Employees.Include(n=> n.Bookings).First(n => n.EmployeeId == id);
+                return ctx.Employees.First(n => n.EmployeeId == id);
             }
         }
 
@@ -113,7 +153,7 @@ namespace tempusAPI.Models
         {
             using (var ctx = new BookingDbContext())
             {
-                return ctx.Employees.Include(n=> n.Bookings).First(n => n.UserName == userName);
+                return ctx.Employees.First(n => n.UserName == userName);
             }
         }
 
@@ -122,6 +162,15 @@ namespace tempusAPI.Models
             using (var ctx = new BookingDbContext())
             {
                 ctx.Bookings.Add(booking);
+                ctx.SaveChanges();
+            }
+        }
+
+        public void PatchBooking(Booking booking)
+        {
+            using (var ctx = new BookingDbContext())
+            {
+                ctx.Bookings.Update(booking);
                 ctx.SaveChanges();
             }
         }
