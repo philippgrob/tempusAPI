@@ -11,7 +11,7 @@ namespace tempusAPI.Controllers
     public class BookingController:Controller
     {
         
-        [HttpGet("/id/{id}")]
+        [HttpGet("{id}")]
         public Booking GetBookingById(int id)
         {
             var repo = new BookingEfRepository();
