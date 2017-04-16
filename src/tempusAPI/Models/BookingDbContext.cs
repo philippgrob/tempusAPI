@@ -20,9 +20,7 @@ namespace tempusAPI.Models
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            //modelBuilder.Entity<Project>().ToTable("Booking");
-            //modelBuilder.Entity<Employee>().ToTable("Booking");
-            modelBuilder.Entity<Booking>().ToTable("Booking");
+                modelBuilder.Entity<Booking>().ToTable("Booking");
         }
     }
 }

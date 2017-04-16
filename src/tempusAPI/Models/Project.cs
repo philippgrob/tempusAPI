@@ -11,10 +11,6 @@ namespace tempusAPI.Models
     {
         public int ProjectId { get; set; }
 
-       public string ProjectName { get; set; }
-
-        [JsonIgnore]
-        public List<Booking> Bookings { get; set; } = new List<Booking>();
-
+        public string ProjectName { get; set; }
     }
 }

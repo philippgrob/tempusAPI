@@ -14,9 +14,5 @@ namespace tempusAPI.Models
         public String UserName { get; set; }
         public string FirstName { get; set; }
         public string LastName { get; set; }
-
-        [JsonIgnore]
-        public List<Booking> Bookings { get; set; } = new List<Booking>();
-
     }
 }

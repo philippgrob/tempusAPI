@@ -1,8 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Mvc.Formatters.Json.Internal;
 using Microsoft.EntityFrameworkCore;
+using Newtonsoft.Json;
 using Remotion.Linq.Parsing;
 
 namespace tempusAPI.Models
@@ -16,57 +19,33 @@ namespace tempusAPI.Models
                 ctx.Database.EnsureDeleted();
                 ctx.Database.EnsureCreated();
 
-                var b1 = new Booking
-                {
-                    BeginDate = DateTime.Now,
-                    EndDate = DateTime.Now.AddHours(2),
-                    Completed =  true
-                };
+                List<Employee> initialEmployees = new List<Employee>();
 
-                var b2 = new Booking
-                {
-                    BeginDate = DateTime.Now,
-                    EndDate = DateTime.Now.AddHours(4),
-                    Completed = true
-                };
+                string employeeMockData = File.ReadAllText("D:/employeeMockData.json");
 
-                var e1 = new Employee
-                {
-                    FirstName = "Hans",
-                    LastName = "Huber",
-                    UserName = "hHuber"
-                };
+                initialEmployees = JsonConvert.DeserializeObject<List<Employee>>(employeeMockData);
+                  
+                ctx.Employees.AddRange(initialEmployees);
 
-                var e2 = new Employee
-                {
-                    FirstName = "Karin",
-                    LastName = "Kogler",
-                    UserName = "kKogler"
-                };
 
-                var p1 = new Project
-                {
-                        ProjectName = "Thyssen Krupp AG",
-                };
-                var p2 = new Project
-                {
-                    ProjectName = "OMV AG",
-                };
 
-                e1.Bookings.Add(b1);
-                p1.Bookings.Add(b1);
+                List<Project> initialProjects = new List<Project>();
 
-                e2.Bookings.Add(b2);
-                p2.Bookings.Add(b2);
+                string projectMockData = File.ReadAllText("D:/projectMockData.json");
 
-                ctx.Bookings.Add(b1);
-                ctx.Bookings.Add(b2);
-                ctx.Employees.Add(e1);
-                ctx.Employees.Add(e2);
-                ctx.Projects.Add(p1);
-                ctx.Projects.Add(p2);
+                initialProjects = JsonConvert.DeserializeObject<List<Project>>(projectMockData);
 
-                ctx.SaveChanges();
+                ctx.Projects.AddRange(initialProjects);
+
+
+                List<Booking> initialBookings = new List<Booking>();
+                string bookingsMockData = File.ReadAllText("D:/bookingsMockData.json");
+
+                initialBookings = JsonConvert.DeserializeObject<List<Booking>>(bookingsMockData);
+
+                ctx.Bookings.AddRange(initialBookings);
+
+              ctx.SaveChanges();
 
             }
         }
