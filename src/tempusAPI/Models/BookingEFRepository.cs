@@ -20,8 +20,8 @@ namespace tempusAPI.Models
                 ctx.Database.EnsureCreated();
 
                 List<Employee> initialEmployees = new List<Employee>();
-
-                string employeeMockData = File.ReadAllText("D:/employeeMockData.json");
+                string pathEmployee = Path.Combine(Directory.GetCurrentDirectory() + "/Models/MockData/employeeMockData.json");
+                string employeeMockData = File.ReadAllText(pathEmployee);
 
                 initialEmployees = JsonConvert.DeserializeObject<List<Employee>>(employeeMockData);
                   
@@ -30,8 +30,8 @@ namespace tempusAPI.Models
 
 
                 List<Project> initialProjects = new List<Project>();
-
-                string projectMockData = File.ReadAllText("D:/projectMockData.json");
+                string pathProject = Path.Combine(Directory.GetCurrentDirectory() + "/Models/MockData/projectMockData.json");
+                string projectMockData = File.ReadAllText(pathProject);
 
                 initialProjects = JsonConvert.DeserializeObject<List<Project>>(projectMockData);
 
@@ -39,7 +39,8 @@ namespace tempusAPI.Models
 
 
                 List<Booking> initialBookings = new List<Booking>();
-                string bookingsMockData = File.ReadAllText("D:/bookingsMockData.json");
+                string Bookingpath = Path.Combine(Directory.GetCurrentDirectory() + "/Models/MockData/bookingsMockData.json");
+                string bookingsMockData = File.ReadAllText(Bookingpath);
 
                 initialBookings = JsonConvert.DeserializeObject<List<Booking>>(bookingsMockData);
 
