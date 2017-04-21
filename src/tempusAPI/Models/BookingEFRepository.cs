@@ -22,13 +22,26 @@ namespace tempusAPI.Models
                 List<Employee> initialEmployees = new List<Employee>();
                 string pathEmployee = Path.Combine(Directory.GetCurrentDirectory() + "/Models/MockData/employeeMockData.json");
                 string employeeMockData = File.ReadAllText(pathEmployee);
-
+                
                 initialEmployees = JsonConvert.DeserializeObject<List<Employee>>(employeeMockData);
-                  
-                ctx.Employees.AddRange(initialEmployees);
 
+                Employee e1 = new Employee
+                {
+                    FirstName = "Christine",
+                    LastName = "Kelley",
+                    UserName = "ckelley0"
 
+                };
 
+            Employee e2 = new Employee
+            {
+                FirstName = "Carol",
+                LastName = "Bishop",
+                UserName = "cbishop2"
+            };
+
+                ctx.Employees.Add(e1);
+                ctx.Employees.Add(e2);
                 List<Project> initialProjects = new List<Project>();
                 string pathProject = Path.Combine(Directory.GetCurrentDirectory() + "/Models/MockData/projectMockData.json");
                 string projectMockData = File.ReadAllText(pathProject);
