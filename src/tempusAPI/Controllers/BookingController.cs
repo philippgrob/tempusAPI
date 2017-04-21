@@ -46,7 +46,7 @@ namespace tempusAPI.Controllers
         }
 
         [HttpDelete]
-        public void Remove(int id)
+        public void Remove([FromQuery]int id)
         {
             var repo = new BookingEfRepository();
             repo.RemoveBooking(id);
