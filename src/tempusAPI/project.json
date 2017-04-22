@@ -21,7 +21,7 @@
     "Microsoft.AspNetCore.StaticFiles": "1.0.0",
     "Swashbuckle": "6.0.0-beta902",
     "Microsoft.EntityFrameworkCore.SqlServer": "1.0.1",
-    "Microsoft.AspNetCore.Authentication.JwtBearer": "1.0.0",
+    "Microsoft.AspNetCore.Authentication.JwtBearer": "1.1.1",
     "IdentityServer4.AccessTokenValidation": "1.1.0",
     "Microsoft.Extensions.Configuration.CommandLine": "1.0.0",
     "system.net.networkinformation": "4.0.10-beta-23123"

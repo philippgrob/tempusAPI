@@ -20,7 +20,7 @@ namespace tempusAPI
             //hier muesst ihr euren Host eintragen --> cmd - ipconfig
             var hostUrl = configuration["hosturl"];
             if (string.IsNullOrEmpty(hostUrl))
-                hostUrl = string.Concat("http://0.0.0.0",":5001");
+                hostUrl = string.Concat("http://localhost",":5001");
 
             var host = new WebHostBuilder()
                 .UseKestrel()

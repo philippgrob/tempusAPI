@@ -53,13 +53,12 @@ namespace tempusAPI
             loggerFactory.AddConsole(Configuration.GetSection("Logging"));
             loggerFactory.AddDebug();
 
-            //app.UseIdentityServerAuthentication(new IdentityServerAuthenticationOptions
-            //{
-            //    Authority = "https://localhost:5000/identity",
-            //    RequireHttpsMetadata = false,
-            //    ApiName = "api1"
-            //});
-
+            app.UseIdentityServerAuthentication(new IdentityServerAuthenticationOptions
+            {
+                Authority = "http://localhost:5000/",
+                RequireHttpsMetadata = false,
+                ApiName = "api1"
+            });
 
 
             app.UseCors(builder =>
