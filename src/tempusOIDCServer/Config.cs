@@ -31,6 +31,45 @@ namespace tempusOIDCServer
         {
             return new List<Client>
             {
+                //@Daniel: here you can implement the client for android maybe like this:
+                new Client
+                {
+                    ClientId = "tempusAndroid",
+                    ClientName = "Tempus Android Client",
+                    AllowedGrantTypes = GrantTypes.Implicit,
+
+                    // where to redirect to after login??? ----> wohin soll er?
+                    RedirectUris = {"http://localhost:5002/signin-oidc"},
+
+                    // where to redirect to after logout??? ----> wohin soll er?
+                    PostLogoutRedirectUris = {"http://localhost:5002/signout-callback-oidc"},
+
+                    AllowedScopes = new List<string>
+                    {
+                        IdentityServerConstants.StandardScopes.OpenId,
+                        IdentityServerConstants.StandardScopes.Profile
+                    }
+                },
+
+                 new Client
+                {
+                    ClientId = "postmanTempus",
+                    ClientName = "postmanTempus",
+                    AllowedGrantTypes = GrantTypes.Implicit,
+
+                    // where to redirect to after login??? ----> wohin soll er?
+                    RedirectUris = {"https://www.getpostman.com/oauth2/callback"},
+
+                    // where to redirect to after logout??? ----> wohin soll er?
+                    PostLogoutRedirectUris = {"https://www.getpostman.com/oauth2/callback"},
+
+                    AllowedScopes = new List<string>
+                    {
+                        IdentityServerConstants.StandardScopes.OpenId,
+                        IdentityServerConstants.StandardScopes.Profile
+                    }
+                },
+
                 new Client
                 {
                     ClientId = "mvc",

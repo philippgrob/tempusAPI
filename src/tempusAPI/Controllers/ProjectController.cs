@@ -8,7 +8,7 @@ using tempusAPI.Models;
 
 namespace tempusAPI.Controllers
 {
-    //[Authorize]
+    [Authorize]
     [Route( ("api/[controller]"))]
     public class ProjectController:Controller
     {
