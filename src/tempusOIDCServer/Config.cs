@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using IdentityServer4;
 using IdentityServer4.Models;
 using IdentityServer4.Test;
+using System.Security.Claims;
 
 namespace tempusOIDCServer
 {
@@ -31,25 +32,29 @@ namespace tempusOIDCServer
         {
             return new List<Client>
             {
-                //@Daniel: here you can implement the client for android maybe like this:
-                new Client
+                 new Client
                 {
-                    ClientId = "tempusAndroid",
-                    ClientName = "Tempus Android Client",
-                    AllowedGrantTypes = GrantTypes.Implicit,
+                   ClientId = "tempusAndroid",
+                   RequireClientSecret = false,
+                   ClientName = "Android app client",
+                   // Authorisierungsprozess authentication_code
+                   AllowedGrantTypes = GrantTypes.Code,
+                   RequirePkce = true,
+                   //AllowAccessTokensViaBrowser = true,
+                   RequireConsent = false,
 
-                    // where to redirect to after login??? ----> wohin soll er?
-                    RedirectUris = {"http://localhost:5002/signin-oidc"},
-
-                    // where to redirect to after logout??? ----> wohin soll er?
-                    PostLogoutRedirectUris = {"http://localhost:5002/signout-callback-oidc"},
-
-                    AllowedScopes = new List<string>
-                    {
-                        IdentityServerConstants.StandardScopes.OpenId,
-                        IdentityServerConstants.StandardScopes.Profile
-                    }
-                },
+                   // RedirectURI für Android AppAuth
+                   RedirectUris = { "at.c02.tempus:/oauth2redirect" },
+                   AllowedScopes =
+                   {
+                           IdentityServerConstants.StandardScopes.OpenId,
+                           IdentityServerConstants.StandardScopes.Profile, 
+                           // Erlaubt Token-Refresh
+                           IdentityServerConstants.StandardScopes.OfflineAccess,
+                           // notwendig, um Zugriff auf API zu bekommen
+                           "api1"
+                   },
+               },
 
                  new Client
                 {

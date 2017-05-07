@@ -13,7 +13,11 @@ namespace tempusOIDCServer
         // For more information on how to configure your application, visit http://go.microsoft.com/fwlink/?LinkID=398940
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddIdentityServer()
+            services.AddIdentityServer(options =>
+                {
+                    // Issuer-URI festlegen, damit alle Tokens den gleichen Issuer haben
+                    options.IssuerUri = "http://localhost:5000";
+                })
                 .AddTemporarySigningCredential()
                 .AddInMemoryIdentityResources(Config.GetIdentityResources())
                 .AddInMemoryApiResources(Config.GetApitResources())
