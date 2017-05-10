@@ -129,13 +129,19 @@ namespace tempusOIDCServer
                 {
                     SubjectId = "1",
                     Username = "ckelley0",
-                    Password = "password"
+                    Password = "password",
+                    Claims = new List<Claim> {
+                        new Claim(IdentityModel.JwtClaimTypes.Name, "ckelley0")
+                    }
                 },
                 new TestUser()
                 {
                     SubjectId = "2",
                     Username = "cbishop2",
-                    Password = "password2"
+                    Password = "password2",
+                    Claims = new List<Claim> {
+                        new Claim(IdentityModel.JwtClaimTypes.Name, "cbishop2")
+                    }
                 }
             };
         }
